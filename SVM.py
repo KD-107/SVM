@@ -105,6 +105,6 @@ def main():
             else:
                 temp = 1
         err = err + temp ^ test_label[i]
-    ic("acc:",1-err/(32129-30000))
+    ic("acc:",1-err/len(test_label))
 
 main()
