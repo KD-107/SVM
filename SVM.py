@@ -3,7 +3,7 @@ import pandas as pd
 from icecream import ic
 from matplotlib import pyplot as plt
 from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
+from sklearn.model_selection import train_test_split
 from collections import Counter
 from sklearn.svm import SVC, LinearSVC
 from sklearn.datasets import make_blobs
@@ -89,12 +89,8 @@ def main():
     # 下面的数据(coef,intercept)是由于SVM一次训练时间过长,此处拿其中一次训练结果为例进行预测
     coef = 15529.59226939
     intercept = np.array([-5.68105005e+00, -6.37708844e+00, -6.04235713e+00,-5.50950198e+00, -5.21255654e+00, -2.17019701e+00,-4.22719605e+00, -4.95479307e+00, -2.48543769e+00,-2.33734947e+00, -1.35756263e+00, -2.66418745e+00,-1.00168975e+00, -3.44009636e+00,  8.67477581e-01,-2.22037058e+00, -3.88820463e+00, -1.24632849e+00,9.39162970e-02, -9.57975730e-01, -3.32886854e+00,1.19442402e+00,  1.66210979e-01,  2.83926342e+00,-3.76821814e+00,  1.97972441e+00, -2.03227261e+00,1.95594284e+00,  2.69201228e+00,  7.34166875e-01,1.30401812e+00,  2.36901204e+00, -1.19630992e-03,-5.44686803e+00, -1.50312744e+00,  4.13848941e+00,7.35681087e-01,  8.19779906e+00,  8.32216723e+00,3.86105523e+00])
-    ic(coef)
-    ic(intercept)
-    test_pre = pica[best40_feature_list].loc[30000:32129]
-    test_label = label['REPEAT'].loc[30000:32129]
+    test_pre,test_label = train_test_split(pica[best40_feature_list],label['REPEAT'],test_size=0.1,random_state=0)
     test_pre = np.array(test_pre)
-    # ic(test_pre)
     err = 0
     for i in range(30000,32129):
         for j in range(40):
