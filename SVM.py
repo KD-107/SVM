@@ -56,6 +56,10 @@ def ske_kue(x,cloumns):
     print('偏度  = ', s.skew(), '峰度:', s.kurt())  # 计算偏度和峰度
     return s.skew(),s.kurt()
 
+def softmax(x):
+    x -= np.max(x, axis=1, keepdims=True)  # 为了稳定地计算softmax概率， 一般会减掉最大的那个元素
+    x = np.exp(x) / np.sum(np.exp(x), axis=1, keepdims=True)
+    return x
 
 def SVM(x,cloumns,y):
     modelSVM = SVC(kernel='linear', C=100)
@@ -95,7 +99,7 @@ def main():
     for i in range(30000,32129):
         for j in range(40):
             temp = test_pre[j][i] * intercept[j] + coef
-            temp = np.softmax(temp)
+            temp = softmax(temp)
             if temp<0.5:
                 temp = 0
             else:
